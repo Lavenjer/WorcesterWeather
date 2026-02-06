@@ -1,23 +1,35 @@
-<h1>Hourly Weather</h1>
+<div>
+    <a href="?day={{ day|add:-1 }}">
+        <button>Previous</button>
+    </a>
+
+    <span>Day {{ day }}</span>
+
+    <a href="?day={{ day|add:1 }}">
+        <button>Next</button>
+    </a>
+</div>
 
 <table border="1">
-  <tr>
-    <th>Time</th>
-    <th>Temp (°C)</th>
-    <th>Feels Like</th>
-    <th>Wind</th>
-    <th>Visibility</th>
-    <th>Precipitation (%)</th>
-  </tr>
+    <tr>
+        <th>Time</th>
+        <th>Temperature (F°)</th>
+        <th>Feels Like (F°)</th>
+        <th>Wind Speed (mph)</th>
+        <th>Wind Direction</th>
+        <th>Visibility (miles)</th>
+        <th>Precipitation</th>
+    </tr>
 
-  {% for w in weather_data %}
-  <tr>
-    <td>{{ w.time }}</td>
-    <td>{{ w.temperature }}</td>
-    <td>{{ w.apparent_temperature }}</td>
-    <td>{{ w.wind_speed }} km/h ({{ w.wind_direction }}°)</td>
-    <td>{{ w.visibility }}</td>
-    <td>{{ w.precipitation_probability }}</td>
-  </tr>
-  {% endfor %}
+    {% for h in weather_data %}
+    <tr>
+        <td>{{ h.time }}</td>
+        <td>{{ h.temperature }}</td>
+        <td>{{ h.apparent_temperature }}</td>
+        <td>{{ h.wind_speed }}</td>
+        <td>{{ h.wind_direction }}</td>
+        <td>{{ h.visibility }}</td>
+        <td>{{ h.precipitation_probability }}</td>
+    </tr>
+    {% endfor %}
 </table>

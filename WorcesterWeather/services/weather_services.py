@@ -39,10 +39,10 @@ def fetch_hourly_weather(lat, lon):
                 latitude=lat,
                 longitude=lon,
                 time=datetime.fromisoformat(times[i]),
-                temperature=temperatures[i],
-                apparent_temperature=apparent_temps[i],
-                wind_speed=wind_speeds[i],
-                wind_direction=wind_directions[i],
+                temperature=round((temperatures[i] * 1.8 + 32), 1),
+                apparent_temperature=round((apparent_temps[i] * 1.8 + 32), 1),
+                wind_speed=round((wind_speeds[i] / 1.609), 1),
+                wind_direction=simplify_wind_direction(wind_directions[i]),
                 visibility=visibilities[i],
                 precipitation_probability=precipitation_probs[i],
             )
@@ -50,3 +50,21 @@ def fetch_hourly_weather(lat, lon):
     HourlyWeather.objects.filter(latitude=lat, longitude=lon).delete()
     HourlyWeather.objects.bulk_create(records, batch_size=50)
     return records
+
+def simplify_wind_direction(bearing):
+    if bearing >= 337.5 or bearing <= 22.5:
+        return "north"
+    elif bearing >= 22.5 and bearing <= 67.5:
+        return "north-east"
+    elif bearing >= 67.5 and bearing <= 112.5:
+        return "east"
+    elif bearing >= 112.5 and bearing <= 157.5:
+        return "south-east"
+    elif bearing >= 157.5 and bearing <= 202.5:
+        return "south"
+    elif bearing >= 202.5 and bearing <= 247.5:
+        return "south-west"
+    elif bearing >= 247.5 and bearing <= 292.5:
+        return "west"
+    elif bearing >= 292.5 and bearing <= 337.5:
+        return "north-west"

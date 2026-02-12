@@ -3,7 +3,13 @@ from datetime import timedelta
 from django.utils import timezone
 from WorcesterWeather.models import HourlyWeather
 
+"""
+Handles user input and the models to template. It recieves HTTP requests and reads the query's parameters.
+The date range is computed and filters the database. Finally, the data is passed onto the template.
+"""
 def hourly_weather_view(request):
+
+    #Although redundant, this is useful for repopulating the model during development.
     lat = 42.2626
     lon = -71.8023
 
@@ -20,8 +26,6 @@ def hourly_weather_view(request):
     weather_data = (
         HourlyWeather.objects
         .filter(
-            latitude=lat,
-            longitude=lon,
             time__gte=start,
             time__lt=end
         )
@@ -35,4 +39,10 @@ def hourly_weather_view(request):
             "weather_data": weather_data,
             "day": day
         }
+    )
+
+def cycling_safety_index(request):
+    return render(
+        request,
+        "askdj.html"
     )

@@ -1,5 +1,7 @@
 from django.db import models
-
+"""
+Defines the data that gets stored. Each field has a declared data type. The model maps the objects to the database rows using the ORM.
+"""
 class HourlyWeather(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
